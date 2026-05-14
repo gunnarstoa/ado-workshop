@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADO Concepts — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>ADO Concepts</h1>
+      <div class="subtitle">The building blocks of Anaplan Data Orchestration and how they fit together</div>
+      <div class="badge-row">
+        <span class="content-badge">Getting Started</span>
+        <span class="content-badge">⏱ 20 min read</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <h2>ADO at a Glance</h2>
+      <p>Anaplan Data Orchestration (ADO) is a data pipeline tool built directly into the Anaplan platform. It connects external data sources to Anaplan models — transforming, cleansing, and loading data without requiring an external ETL tool or middleware.</p>
+
+      <p>The four core building blocks of ADO are:</p>
+
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <div class="pillar-number">1</div>
+          <h3>Source Data</h3>
+          <p>The raw data that enters ADO. This is either a connection (live link to an external system like Salesforce, SAP, or Snowflake) or a file import (CSV uploaded manually or via automation).</p>
+          <span class="pillar-tag">Input</span>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">2</div>
+          <h3>Transformation Views</h3>
+          <p>A sequence of transform steps that shape the raw source data — filtering rows, casting data types, joining datasets, and computing columns — before the data reaches Anaplan.</p>
+          <span class="pillar-tag">Transform</span>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">3</div>
+          <h3>Links</h3>
+          <p>The connection between a transformation view and a target Anaplan model. A link maps columns in the transformed dataset to modules and list dimensions inside the Anaplan model.</p>
+          <span class="pillar-tag">Load</span>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-number">4</div>
+          <h3>Pipelines</h3>
+          <p>An orchestration of source → transformation → link steps. A pipeline defines what runs, in what order. You can chain multiple transformation steps and links within a single pipeline.</p>
+          <span class="pillar-tag">Orchestrate</span>
+        </div>
+      </div>
+
+      <div class="callout-note">
+        <span class="callout-label">Note</span>
+        <p>The Academy course covers how to build each of these components. This workshop assumes you already understand them. We revisit the concepts here as context for the productionization section — where you'll be duplicating and remapping these components across environments.</p>
+      </div>
+
+      <h2>Connection Types</h2>
+      <p>ADO supports two primary ways to bring data in:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Connection Type</th>
+              <th>How It Works</th>
+              <th>Best For</th>
+              <th>Production Consideration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Live Connector</strong></td>
+              <td>ADO connects directly to an external system (Salesforce, Snowflake, SQL Server, S3, etc.) via a configured connector</td>
+              <td>Recurring, automated data loads from enterprise systems</td>
+              <td>You must create a <em>separate production connection</em> with production system credentials — dev connections must not point to production data</td>
+            </tr>
+            <tr>
+              <td><strong>File Import (CSV)</strong></td>
+              <td>A CSV file is uploaded to ADO as source data, either manually or via API/CloudWorks</td>
+              <td>Simpler setups, batch imports, initial builds, and Academy exercises</td>
+              <td>Upload a production-specific CSV file and create a new source dataset pointing to it</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-tip">
+        <span class="callout-label">Tip</span>
+        <p>The Academy course typically uses CSV files as source data. Both Lab A and Lab B in this workshop use CSV-based source data to keep the exercises consistent with what you built during the Academy course. If your implementation uses live connectors, the same principles apply — you just create a production connector instead of a production CSV.</p>
+      </div>
+
+      <h2>The Dev → UAT → Prod Topology</h2>
+
+      <div class="callout-important">
+        <span class="callout-label">Key Concept</span>
+        <p>ADO does <strong>not</strong> automatically replicate itself across environments the way some ALM tools do. Each environment (Dev, UAT, Prod) requires its own source data, transformation views, and links. The only component that can be "promoted" via a built-in feature is the <strong>link</strong> — using the "Clone to LLM models" feature. Everything else must be manually duplicated and updated.</p>
+      </div>
+
+      <p>Here is what a fully promoted ADO topology looks like for a single dataset:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Dev Environment</th>
+              <th>UAT Environment</th>
+              <th>Prod Environment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Anaplan Model</strong></td>
+              <td>HR Model (Dev)</td>
+              <td>HR Model (UAT)</td>
+              <td>HR Model (Prod)</td>
+            </tr>
+            <tr>
+              <td><strong>Source Data</strong></td>
+              <td>Dev CSV / Dev Connector</td>
+              <td>UAT CSV / UAT Connector</td>
+              <td>Prod CSV / Prod Connector</td>
+            </tr>
+            <tr>
+              <td><strong>Transformation View</strong></td>
+              <td>Employee TV (Dev)</td>
+              <td>Employee TV (UAT) — duplicated manually</td>
+              <td>Employee TV (Prod) — duplicated manually</td>
+            </tr>
+            <tr>
+              <td><strong>Link</strong></td>
+              <td>Dev Link → HR Model (Dev)</td>
+              <td>Cloned via "Clone to LLM models"</td>
+              <td>Cloned via "Clone to LLM models"</td>
+            </tr>
+            <tr>
+              <td><strong>Workflow Template</strong></td>
+              <td>Dev Template</td>
+              <td>Duplicated; action updated</td>
+              <td>Duplicated; action updated</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>When to Use ADO vs. Alternatives</h2>
+      <p>ADO is powerful but not always the right tool. Here is a quick decision guide:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Recommended Approach</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Data from enterprise source (Salesforce, Workday, Snowflake) that needs transformation before loading</td>
+              <td><strong>ADO with Live Connector</strong></td>
+              <td>Purpose-built for this — native connectors, visual transformation, scheduled runs</td>
+            </tr>
+            <tr>
+              <td>Simple flat-file import, no transformation required</td>
+              <td><strong>CloudWorks Connector or direct flat-file import</strong></td>
+              <td>ADO adds complexity that isn't needed; CloudWorks handles this more simply</td>
+            </tr>
+            <tr>
+              <td>Model-to-model sync within Anaplan (data hub pattern)</td>
+              <td><strong>Native Anaplan import actions</strong></td>
+              <td>ADO is designed for external data; in-Anaplan data should use native actions</td>
+            </tr>
+            <tr>
+              <td>Near-real-time data loads (&lt;15 min intervals)</td>
+              <td><strong>Direct API integration</strong></td>
+              <td>ADO scheduling minimum is typically 15 minutes; API calls can be more frequent</td>
+            </tr>
+            <tr>
+              <td>Complex multi-source join before loading to Anaplan</td>
+              <td><strong>ADO with multiple transformation steps</strong></td>
+              <td>ADO transformation views support multi-dataset joins natively</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-warning">
+        <span class="callout-label">Warning</span>
+        <p>Avoid sourcing data from Anaplan modules that have subsidiary views. ADO will copy all columns from the module view, including calculated and aggregated data points that create complex, unpredictable structures. Always create a dedicated flat export module for ADO source data.</p>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./01-overview.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← Workshop Overview</a>
+        <a href="./03-automation-scheduling.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">Automating ADO Jobs →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

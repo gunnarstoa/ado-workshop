@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting &amp; Common Errors — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Troubleshooting &amp; Common Errors</h1>
+      <div class="subtitle">Diagnose and resolve the most frequent ADO automation and production issues</div>
+      <div class="badge-row">
+        <span class="content-badge">Reference</span>
+        <span class="content-badge">Use As Needed</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <p>This page covers the most common errors encountered when automating ADO with Workflow and when promoting ADO from Development to Production. Each section describes the symptom, root cause, and resolution steps.</p>
+
+      <h2>Workflow Issues</h2>
+
+      <h3>Error: Workflow Fires but the Wrong Action Runs</h3>
+      <div class="callout-warning">
+        <span class="callout-label">Symptom</span>
+        <p>The Workflow schedule triggers on time, Run History shows "Completed," but the data in the target model has not been updated — or the wrong model received data.</p>
+      </div>
+      <p><strong>Root Cause:</strong> The ADO Action step inside the Workflow template is pointing to the wrong link. This most commonly happens when a production template was duplicated from a development template but the step was not updated to reference the production link. The template still runs the Dev link.</p>
+      <p><strong>Resolution:</strong></p>
+      <ol>
+        <li>Open the Workflow template that ran.</li>
+        <li>Check the ADO Action step — confirm which link it references.</li>
+        <li>If it references the Dev link when you expected a Prod link: edit the step, change the link to the correct production link, and save.</li>
+        <li>Run the template again manually using "Run Now" and verify the correct model receives data.</li>
+      </ol>
+      <div class="callout-tip">
+        <span class="callout-label">Prevention</span>
+        <p>After duplicating a Workflow template for production use, always open the new template and verify the ADO Action step before enabling the schedule. One wrong reference can silently run the wrong pipeline for days.</p>
+      </div>
+
+      <h3>Error: Schedule Doesn't Trigger</h3>
+      <div class="callout-warning">
+        <span class="callout-label">Symptom</span>
+        <p>The expected run time passes, but the Workflow template shows no new entry in Run History. It appears the schedule never fired.</p>
+      </div>
+      <p><strong>Common Causes and Fixes:</strong></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Cause</th>
+              <th>How to Identify</th>
+              <th>Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Schedule is disabled</td>
+              <td>Template shows "Not scheduled" or Enabled toggle is OFF</td>
+              <td>Open the template → Schedule tab → toggle Enabled to ON → save</td>
+            </tr>
+            <tr>
+              <td>Wrong timezone math — run time already passed for today</td>
+              <td>Expected 11 PM local but set 23:00 without accounting for UTC offset</td>
+              <td>Recalculate the UTC time, update the schedule time field</td>
+            </tr>
+            <tr>
+              <td>No action in the template</td>
+              <td>Template has zero steps — ADO Action was never added or was deleted</td>
+              <td>Add the ADO Action step and re-enable the schedule</td>
+            </tr>
+            <tr>
+              <td>Workspace quota exceeded</td>
+              <td>Admin console shows workspace size warnings or errors</td>
+              <td>Free up space in the workspace or request quota increase from your Anaplan admin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Productionization Issues</h2>
+
+      <h3>Error: Transformation View Still Points at Dev Data After Production Link Created</h3>
+      <div class="callout-warning">
+        <span class="callout-label">Symptom</span>
+        <p>The production pipeline runs and loads data into HR Model (Prod), but you notice the data matches Dev source data exactly — it looks like the same small sample set rather than production data. Alternatively, changes made to the production CSV file are not reflected in the model after a run.</p>
+      </div>
+      <p><strong>Root Cause:</strong> After cloning a link using "Clone to LLM models," the production link's source remains set to the development transformation view. Production data is never actually read — the pipeline is still pulling from Dev source data.</p>
+      <p><strong>Resolution:</strong></p>
+      <ol>
+        <li>Open ADO → Links. Find the production link.</li>
+        <li>Check the <strong>Source</strong> field. If it shows a Dev transformation view, that is the problem.</li>
+        <li>Change the source to the production transformation view (the one you created by duplicating and updating the Dev view).</li>
+        <li>Save the production link.</li>
+        <li>Run the pipeline again manually and verify the correct data loads.</li>
+      </ol>
+      <div class="callout-important">
+        <span class="callout-label">Root of the Problem</span>
+        <p>The "Clone to LLM models" feature clones the <em>model target</em> of the link (pointing it at the production model), but it does <strong>not</strong> clone the source. You must always update the source manually after cloning. This is the single most common mistake in ADO productionization.</p>
+      </div>
+
+      <h3>Error: Source Data Not Connected Correctly — No Data Loaded</h3>
+      <div class="callout-warning">
+        <span class="callout-label">Symptom</span>
+        <p>The ADO pipeline runs and shows "Completed" status, but the target Anaplan model has no new data or the module remains empty after the run.</p>
+      </div>
+      <p><strong>Common Causes and Fixes:</strong></p>
+      <ol>
+        <li>
+          <strong>Source data file is empty or has wrong headers:</strong> Open the source dataset in ADO and preview the data. If it shows 0 rows or the column headers don't match what the transformation view expects, fix the CSV file and re-upload.
+        </li>
+        <li>
+          <strong>Transformation view filter removes all rows:</strong> Open the transformation view and run a preview. If the output shows 0 rows but the source shows rows, check your filter logic — it may be too restrictive for the production data.
+        </li>
+        <li>
+          <strong>Link column mapping broken:</strong> Open the link and review the column-to-list/module mappings. If the production model has different list member names than expected, mappings may fail to resolve — resulting in 0 rows loaded. Verify that the production model's lists are populated with the correct members.
+        </li>
+        <li>
+          <strong>Workspace size insufficient:</strong> The Anaplan workspace may not have enough available space to receive the data. Check Workspace Admin → Workspace Size. If the workspace is near capacity, free up space before re-running.
+        </li>
+      </ol>
+
+      <h3>Error: Connection Failures in Production</h3>
+      <div class="callout-warning">
+        <span class="callout-label">Symptom</span>
+        <p>If using a live connector (not CSV), the ADO pipeline fails with a connection error. Run History shows "Failed" with an error message referencing authentication, network, or timeout.</p>
+      </div>
+      <p><strong>Common Causes:</strong></p>
+      <ul>
+        <li><strong>Wrong credentials:</strong> Production connection was configured with dev/sandbox credentials. Re-open the production connector configuration in ADO and update the username, password, or API key to production credentials.</li>
+        <li><strong>IP allowlisting not configured:</strong> The source system's firewall is blocking connections from Anaplan's IP range. Provide Anaplan's IP addresses to the customer's IT team and request they be allowlisted.</li>
+        <li><strong>TLS/SSL certificate mismatch:</strong> The production system uses a self-signed certificate that ADO doesn't trust. Work with the customer's IT team to install a trusted certificate or configure the connector to accept the certificate.</li>
+        <li><strong>Network timeout — large dataset:</strong> The source system is slow to respond (large dataset extract takes more than the connector timeout). Optimize the query at the source — pre-aggregate or filter records before ADO pulls them. Refer to Planual rule 8.01-07 on connector performance factors.</li>
+      </ul>
+
+      <h3>Error: Transformation View Errors After Source Change</h3>
+      <div class="callout-warning">
+        <span class="callout-label">Symptom</span>
+        <p>After duplicating a transformation view and changing its source to production, the transformation steps show errors — red indicators on specific steps, or columns that were referenced in expressions are now missing.</p>
+      </div>
+      <p><strong>Root Cause:</strong> The production source data has different column headers from the Dev source data. The transformation steps reference specific column names, and those references break when the column names change.</p>
+      <p><strong>Resolution:</strong></p>
+      <ol>
+        <li>Open the production source dataset and note the exact column header names.</li>
+        <li>Compare to the Dev source dataset column headers.</li>
+        <li>In the production transformation view, click through each step that shows an error. Update the column references to match the production column names.</li>
+        <li>As a best practice: standardize column naming in all source data files (dev and prod should have identical headers). This makes promotion trivial.</li>
+      </ol>
+
+      <div class="callout-tip">
+        <span class="callout-label">Best Practice</span>
+        <p>When setting up ADO during development, agree on a column naming standard with the customer's source system team. If Dev and Prod CSVs always have the same column headers, transformation views can be duplicated with zero changes — a major time saver during productionization.</p>
+      </div>
+
+      <h2>General ADO Best Practices for Production</h2>
+
+      <ul>
+        <li><strong>Use saved views, not raw modules, as ADO sources.</strong> If sourcing data from Anaplan itself, always export from a saved view (never the raw module or list). Saved views let you filter and control exactly what data ADO reads. (Planual 5.04-09)</li>
+        <li><strong>Remove duplicate rows before the link.</strong> Duplicate rows in source data slow the link and can cause unpredictable behavior in Anaplan lists. Add a deduplication step in your transformation view before the final output. (Planual 8.04-03)</li>
+        <li><strong>Use code mapping for numbered lists.</strong> When loading into Anaplan numbered lists, map the code field, not the name. Name mapping treats code as an attribute, which can cause unexpected list behavior. (Planual 8.04-06)</li>
+        <li><strong>Reduce data volume as early as possible.</strong> Apply filters and aggregations in the first transformation steps. Don't pass 10 million rows through four transform steps only to filter them at the end. (Planual 8.02-01)</li>
+      </ul>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./06-lab-production.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← Lab B: Promote Dev to Production</a>
+        <a href="./08-qanda.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">Q&amp;A from Sessions →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab A: Automate Your ADO Job — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Lab A: Automate Your ADO Job</h1>
+      <div class="subtitle">Create workflow templates to schedule your ADO links automatically</div>
+      <div class="badge-row">
+        <span class="content-badge">Lab A</span>
+        <span class="content-badge">⏱ 60 min</span>
+        <span class="content-badge">Hands-On</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <div class="callout-note">
+        <span class="callout-label">Meridian Corp Scenario</span>
+        <p>You are an Anaplan partner who has just completed building Meridian Corp's ADO pipelines during the development phase. The HR team needs employee payroll data refreshed <strong>nightly</strong> at 11 PM UTC. The product team needs product inventory data refreshed <strong>weekly</strong> on Sunday mornings. Your task is to automate both ADO jobs using Workflow.</p>
+      </div>
+
+      <h2>What You'll Need</h2>
+      <ul>
+        <li>Your ADO workspace from the Academy course (with the HR model ADO job and FPA model ADO job)</li>
+        <li>Workspace Admin access</li>
+        <li>Access to Workflow in your Anaplan platform</li>
+      </ul>
+
+      <div class="callout-tip">
+        <span class="callout-label">No Academy models?</span>
+        <p>If you don't have models from the Academy course, use any ADO job you've built. The steps are the same — just substitute your model and link names where the lab references HR Model or FPA Model.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">1</div>
+          <div class="mini-lab-title">Create Your First Workflow Template — Employee Data</div>
+          <div class="mini-lab-duration">⏱ 15 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Create a Workflow template named "ADO | Employee Data | Dev | Nightly" and add your HR Model ADO link as the first step.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>From the Anaplan platform, click the <strong>Workflow</strong> icon in the left navigation bar (it looks like a set of connected nodes or is labeled "Workflow" depending on your version).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Click <strong>New Template</strong> in the top-right corner of the Workflow screen.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>In the Name field, enter: <code>ADO | Employee Data | Dev | Nightly</code></div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>In the Description field, enter: <em>Automates nightly HR payroll data load for Meridian Corp Dev environment</em></div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Click <strong>Add Step</strong>. Select <strong>ADO Action</strong> as the step type.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div>In the ADO Action dropdown, find and select your <strong>HR Model ADO link</strong> (the link that loads employee/payroll data into the HR model from the Academy course).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">7</div>
+              <div>Click <strong>Save</strong> to save the template (do not configure the schedule yet — that is Mini-Lab 2).</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">New Workflow template with name filled in and the HR Model ADO link added as Step 1.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>A template named "ADO | Employee Data | Dev | Nightly" exists in your Workflow list</li>
+            <li>It has one step: your HR Model ADO link</li>
+            <li>Status shows "Saved" (no schedule yet)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">2</div>
+          <div class="mini-lab-title">Configure the Schedule</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Set a nightly schedule on the employee data template so ADO runs automatically at 23:00 UTC every day.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>Open the template you created in Mini-Lab 1: <strong>ADO | Employee Data | Dev | Nightly</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Click the <strong>Schedule</strong> tab (or find the Schedule section on the right panel).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Set <strong>Frequency</strong> to <code>Daily</code>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Set <strong>Time</strong> to <code>23:00</code> (UTC). Note that Anaplan schedules run in UTC — confirm this matches the customer's requirement.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Set <strong>Start date</strong> to today's date (or the desired go-live date).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div>Toggle the <strong>Enabled</strong> switch to ON.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">7</div>
+              <div>Click <strong>Save Schedule</strong>.</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Schedule configuration panel — Daily frequency, 23:00 UTC, Enabled toggle ON.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>The template shows "Scheduled" status</li>
+            <li>Next run time is displayed (approximately 23:00 UTC tonight or the next occurrence)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">3</div>
+          <div class="mini-lab-title">Create a Second Template — Product Data</div>
+          <div class="mini-lab-duration">⏱ 15 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Create a second, separate Workflow template for product data and configure a weekly schedule. Understand why separate templates matter.
+          </div>
+          <div class="callout-important">
+            <span class="callout-label">Why a Separate Template?</span>
+            <p>Product master data changes slowly compared to employee data. If you combined both in one template and the employee data load failed, the product data load would also be blocked or skipped. Separate templates give each dataset its own run history, its own schedule, and its own failure scope.</p>
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>Return to the Workflow templates list. Click <strong>New Template</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Name it: <code>ADO | Product Master | Dev | Weekly</code></div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Add an ADO Action step. Select your <strong>FPA Model ADO link</strong> (the link that loads product or financial data from the Academy course).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Go to the Schedule tab. Set Frequency to <code>Weekly</code>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Set the day to <code>Sunday</code> and time to <code>06:00</code> UTC.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div>Enable the schedule and save.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>A second template "ADO | Product Master | Dev | Weekly" exists in your Workflow list</li>
+            <li>It shows "Scheduled" with next run on the upcoming Sunday at 06:00 UTC</li>
+            <li>You now have two separate templates, each with their own schedule</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">4</div>
+          <div class="mini-lab-title">Verify and Test the Schedule</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Trigger a manual run of your employee data template to verify the pipeline executes correctly before relying on the automated schedule.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>Open the <strong>ADO | Employee Data | Dev | Nightly</strong> template.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Click <strong>Run Now</strong> (or "Test Run" depending on your version). This triggers the ADO link immediately, bypassing the schedule.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Watch the <strong>Run History</strong> tab. Wait for the status to change from "Running" to "Completed" or "Failed".</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>If Completed: navigate to the HR Model in Anaplan and verify that data has been updated (check the last-loaded timestamp or a data value you know should have changed).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>If Failed: note the error message in Run History, then check the <a href="./07-troubleshooting.html">Troubleshooting page</a> for guidance.</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Run History tab showing a completed run with green "Completed" status, run duration, and timestamp.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>The manual test run shows "Completed" status in Run History</li>
+            <li>Data is visible and current in the HR Model</li>
+            <li>You're confident the automation will work on its nightly schedule</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Sample Answers</h2>
+      <p>After completing all four mini-labs, your Workflow templates list should look like this:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Template Name</th>
+              <th>Step</th>
+              <th>Frequency</th>
+              <th>Time (UTC)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ADO | Employee Data | Dev | Nightly</td>
+              <td>HR Model ADO Link</td>
+              <td>Daily</td>
+              <td>23:00</td>
+              <td>Scheduled ✅</td>
+            </tr>
+            <tr>
+              <td>ADO | Product Master | Dev | Weekly</td>
+              <td>FPA Model ADO Link</td>
+              <td>Weekly (Sunday)</td>
+              <td>06:00</td>
+              <td>Scheduled ✅</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-tip">
+        <span class="callout-label">Tip</span>
+        <p>You now have your development environment fully automated. When you promote to production in Lab B, you will create corresponding production versions of these templates — the process is similar but references production links.</p>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./03-automation-scheduling.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← Automating ADO Jobs</a>
+        <a href="./05-productionizing-overview.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">Productionizing ADO →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

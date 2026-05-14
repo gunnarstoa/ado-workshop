@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop Overview — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Workshop Overview</h1>
+      <div class="subtitle">What this workshop is, who it's for, and how to use it</div>
+      <div class="badge-row">
+        <span class="content-badge">Getting Started</span>
+        <span class="content-badge">⏱ 15 min read</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <h2>What Is This Workshop?</h2>
+      <p>This workshop fills a critical gap that the Anaplan ADO Academy course does not cover. The Academy course teaches you <strong>how to build ADO</strong> — pipelines, links, transformation views, and source data. It does that well. This workshop picks up where the Academy leaves off and covers two topics that every delivery partner needs during real-world implementations:</p>
+
+      <div class="pillar-grid">
+        <div class="pillar-card featured">
+          <div class="pillar-number">1</div>
+          <h3>Automate ADO Jobs</h3>
+          <p>Use Anaplan Workflow to schedule ADO runs automatically — no manual triggering required. Configure separate workflow templates per dataset type and set up recurring schedules.</p>
+          <span class="pillar-tag">~2 hours</span>
+        </div>
+        <div class="pillar-card featured">
+          <div class="pillar-number">2</div>
+          <h3>Productionize ADO</h3>
+          <p>Walk through the 6-step process to promote your ADO setup from a development environment through UAT to a full production environment with separate models, source data, and links.</p>
+          <span class="pillar-tag">~2 hours</span>
+        </div>
+      </div>
+
+      <div class="callout-important">
+        <span class="callout-label">Important</span>
+        <p>This workshop does <strong>not</strong> teach you how to build ADO from scratch. If you haven't completed the Anaplan ADO Academy course, do that first — it's a prerequisite. This workshop assumes you already know how ADO works and have working ADO jobs from that course.</p>
+      </div>
+
+      <h2>Who Is This For?</h2>
+      <p>This workshop is designed for:</p>
+      <ul>
+        <li><strong>Model Builders</strong> who have built ADO pipelines during the Academy course and now need to move them to production</li>
+        <li><strong>Solution Architects</strong> who need to understand the full ADO delivery workflow to design and oversee implementations</li>
+        <li>Partners who are working on an Anaplan Apps opportunity and will need ADO for data integration</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Prerequisite</th>
+              <th>Why It Matters</th>
+              <th>Where to Get It</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Completed Anaplan ADO Academy course</strong></td>
+              <td>Foundation for understanding pipelines, links, and transformation views</td>
+              <td>Anaplan Academy (academy.anaplan.com)</td>
+            </tr>
+            <tr>
+              <td><strong>HR Model from Academy course</strong></td>
+              <td>Used in Lab A (automation) and Lab B (productionization)</td>
+              <td>Should be in your workspace from the Academy exercises</td>
+            </tr>
+            <tr>
+              <td><strong>FPA Model from Academy course</strong></td>
+              <td>Used as a secondary model in Lab A exercises</td>
+              <td>Should be in your workspace from the Academy exercises</td>
+            </tr>
+            <tr>
+              <td><strong>Workspace Admin access</strong></td>
+              <td>Required to create models, manage ADO, and configure Workflow</td>
+              <td>Ask your Anaplan tenant admin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout-tip">
+        <span class="callout-label">Tip</span>
+        <p>Don't have your Academy models anymore? You can still follow along conceptually and use any ADO job you've built. The labs will note which specific models to use — if yours are different, adapt accordingly.</p>
+      </div>
+
+      <h2>Workshop Structure</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Section</th>
+              <th>Topic</th>
+              <th>Type</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Getting Started · 1</td>
+              <td>Workshop Overview (this page)</td>
+              <td>Reading</td>
+              <td>15 min</td>
+            </tr>
+            <tr>
+              <td>Getting Started · 2</td>
+              <td>ADO Concepts</td>
+              <td>Reading</td>
+              <td>20 min</td>
+            </tr>
+            <tr>
+              <td>Automation · 1</td>
+              <td>Automating ADO Jobs with Workflow</td>
+              <td>Reading</td>
+              <td>30 min</td>
+            </tr>
+            <tr>
+              <td>Lab A</td>
+              <td>Automate Your ADO Job</td>
+              <td>Hands-on Lab</td>
+              <td>60 min</td>
+            </tr>
+            <tr>
+              <td>Production · 1</td>
+              <td>Productionizing ADO — 6-Step Flow</td>
+              <td>Reading</td>
+              <td>30 min</td>
+            </tr>
+            <tr>
+              <td>Lab B</td>
+              <td>Promote Dev to Production</td>
+              <td>Hands-on Lab</td>
+              <td>60 min</td>
+            </tr>
+            <tr>
+              <td>Reference · 1</td>
+              <td>Troubleshooting &amp; Common Errors</td>
+              <td>Reference</td>
+              <td>As needed</td>
+            </tr>
+            <tr>
+              <td>Reference · 2</td>
+              <td>Q&amp;A from Sessions</td>
+              <td>Reference</td>
+              <td>As needed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Case Study: Meridian Corp</h2>
+      <p>All lab exercises use a fictional company called <strong>Meridian Corp</strong> — a mid-sized manufacturing and distribution company with approximately 2,400 employees across 12 regional offices. Meridian Corp uses Anaplan for financial planning and headcount management, with data flowing from an HRIS and an ERP system into Anaplan via ADO.</p>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>HR Data Flow</h3>
+          <ul>
+            <li>Source: HRIS (exported as CSV)</li>
+            <li>Dataset: Employee master + headcount details</li>
+            <li>Target: HR Model in Anaplan</li>
+            <li>Schedule: Nightly (runs at 11 PM UTC)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Financial Data Flow</h3>
+          <ul>
+            <li>Source: ERP (exported as CSV)</li>
+            <li>Dataset: Product master + cost data</li>
+            <li>Target: FPA Model in Anaplan</li>
+            <li>Schedule: Weekly (Sundays at 6 AM UTC)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>How to Use This Guide</h2>
+      <p>This is a self-paced guide. Work through it in order — the reading pages set up context for each lab. Here's the recommended approach:</p>
+
+      <div class="step">
+        <div class="step-badge">1</div>
+        <div class="step-content">
+          <h3>Read first</h3>
+          <p>Each topic has a reading page that explains the concept and shows the steps with screenshots. Read it fully before starting the lab.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-badge">2</div>
+        <div class="step-content">
+          <h3>Do the lab</h3>
+          <p>Labs are structured as mini-labs — short, focused exercises that build on each other. Each mini-lab has clear objectives and step-by-step instructions.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-badge">3</div>
+        <div class="step-content">
+          <h3>Check your work</h3>
+          <p>Each lab ends with a Sample Answers section showing what the expected outcome looks like. Compare yours to validate your work.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-badge">4</div>
+        <div class="step-content">
+          <h3>Use Reference pages as needed</h3>
+          <p>If something isn't working, check the Troubleshooting page. If you have conceptual questions, check the Q&amp;A page.</p>
+        </div>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <span></span>
+        <a href="./02-ado-concepts.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">ADO Concepts →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

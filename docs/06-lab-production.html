@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab B: Promote Dev to Production — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Lab B: Promote Dev to Production</h1>
+      <div class="subtitle">Walk the full 6-step production promotion for Meridian Corp's HR payroll ADO job</div>
+      <div class="badge-row">
+        <span class="content-badge">Lab B</span>
+        <span class="content-badge">⏱ 60 min</span>
+        <span class="content-badge">Hands-On</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <div class="callout-note">
+        <span class="callout-label">Meridian Corp Scenario</span>
+        <p>Meridian Corp's Development phase is complete. The HR payroll ADO job is working in the Dev environment — employee data loads into the HR Model (Dev) via ADO nightly. The go-live date is approaching. Your task is to promote the HR payroll ADO pipeline to the Production environment so that live payroll data loads into HR Model (Prod) automatically.</p>
+      </div>
+
+      <h2>What You'll Need</h2>
+      <ul>
+        <li>A working ADO pipeline in your Dev environment (HR Model ADO job from Academy course)</li>
+        <li>A production Anaplan model (or use a model you designate as "production" for this exercise)</li>
+        <li>A production CSV file — you can use the same sample CSV from the Academy course for this exercise, just rename it to indicate it's "production data"</li>
+        <li>Workspace Admin access in both the Dev and Prod workspaces (or the same workspace if using a single workspace)</li>
+      </ul>
+
+      <hr class="divider">
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">1</div>
+          <div class="mini-lab-title">Clone the Model to LLM (Create Production Model)</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Create or confirm the existence of a production HR model. This is the Anaplan model that the production ADO link will push data into.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>Navigate to the <strong>Model Management</strong> area of your workspace (via the Workspace Admin menu).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>If you already have a production HR model from a previous ALM promotion: confirm it is up-to-date and note its name. You will select it in Mini-Lab 4.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>If you do not have a production model: duplicate the Dev HR model. Click the <strong>three-dot menu</strong> on the HR Model (Dev) and select <strong>Duplicate</strong>. Name it <strong>HR Model (Prod)</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Open the production model and verify it has the correct module structure (same lists, modules, and line items as Dev). Data can be empty — ADO will populate it.</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Model list in Workspace Admin showing "HR Model (Dev)" and "HR Model (Prod)" as separate entries.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>HR Model (Prod) exists in your workspace</li>
+            <li>You know the exact name of the production model (you'll need it in Mini-Lab 4)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">2</div>
+          <div class="mini-lab-title">Create Production Source Data (CSV Import)</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Upload a production employee CSV file and create a new source dataset in ADO. This is the production data source that will feed the production pipeline.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>Navigate to ADO in your Anaplan workspace. Go to <strong>Source Data</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Click <strong>Add Source Data</strong> → Select <strong>File Import</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Upload your production employee CSV file. For this exercise, use the same CSV from the Academy course and rename it <code>employee_data_prod.csv</code> to distinguish it.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Name the source dataset: <strong>Employee Data — Production</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Confirm column headers are detected correctly (same as the Dev source data — same CSV structure).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div>Save the source dataset.</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">ADO Source Data list showing both "Employee Data — Dev" and newly created "Employee Data — Production" entries.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>"Employee Data — Production" appears in your ADO Source Data list</li>
+            <li>Columns are correctly detected and match the Dev source data structure</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">3</div>
+          <div class="mini-lab-title">Duplicate Transformation View and Update Source</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Create a production transformation view by duplicating the Dev transformation view and pointing it at the production source data.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>In ADO, go to <strong>Transformation Views</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Find your development employee transformation view. Click the <strong>three-dot menu</strong> → <strong>Duplicate</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Rename the duplicate to <strong>Employee Transformation — Production</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Open the production transformation view. Find the <strong>Source Data</strong> setting at the top of the view configuration.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Change the source from <strong>Employee Data — Dev</strong> to <strong>Employee Data — Production</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div>Verify that all transformation steps (column casts, filters, joins) still appear correctly. If column names are identical between Dev and Prod source data, everything should resolve without changes.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">7</div>
+              <div>Save the production transformation view.</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Production transformation view — Source Data field changed to "Employee Data — Production". Transformation steps intact below.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>"Employee Transformation — Production" exists in your Transformation Views list</li>
+            <li>Its source is "Employee Data — Production" (not Dev)</li>
+            <li>All transformation steps are intact and show no errors</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">4</div>
+          <div class="mini-lab-title">Create Production Link Using Clone to LLM Models</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Use ADO's "Clone to LLM models" feature to create a production link targeting the HR Model (Prod), then update its source to the production transformation view.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>In ADO, go to <strong>Links</strong>. Find your development HR link (the one that loads employee data into HR Model (Dev)).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Click the <strong>three-dot menu</strong> on the development link → Select <strong>Clone to LLM models</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>A dialog appears asking you to select the target model. Select <strong>HR Model (Prod)</strong> from the dropdown.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Click <strong>Clone</strong>. ADO creates a new link targeting the production model and automatically creates an ADO import action inside HR Model (Prod).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Find the newly created production link in the Links list. It will have the same name as the Dev link but reference HR Model (Prod).</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div><strong>Critical:</strong> Open the production link. Find the <strong>Source</strong> setting. Note that it currently points to the <em>development</em> transformation view — this was not changed automatically. Change it to <strong>Employee Transformation — Production</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">7</div>
+              <div>Save the production link.</div>
+            </li>
+          </ol>
+          <div class="callout-warning">
+            <span class="callout-label">Easy to Miss</span>
+            <p>The "Clone to LLM models" feature creates a production link pointing at the correct production <em>model</em>, but it does <strong>not</strong> update the source to the production transformation view. If you skip Step 6, production data will actually come from the development transformation view — meaning it's using dev source data. Always check and update the source after cloning.</p>
+          </div>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Production link configuration — Source changed from "Employee Transformation — Dev" to "Employee Transformation — Production". Target model shows "HR Model (Prod)".</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>A production link exists in ADO targeting HR Model (Prod)</li>
+            <li>The link source is "Employee Transformation — Production" (not Dev)</li>
+            <li>The link's import action is visible inside HR Model (Prod)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">5</div>
+          <div class="mini-lab-title">Duplicate Workflow Template and Update Action</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Create a production Workflow template by duplicating the Dev template and updating the ADO Action step to use the production link.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>Navigate to Workflow. Find the template <strong>ADO | Employee Data | Dev | Nightly</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Click the three-dot menu → <strong>Duplicate</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Rename the duplicate to <strong>ADO | Employee Data | Prod | Nightly</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>Open the production template. Find the ADO Action step that references the Dev link. Click to edit the step.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">5</div>
+              <div>Change the ADO link from the development link to the <strong>production link</strong> you created in Mini-Lab 4.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">6</div>
+              <div>Go to the Schedule tab. Confirm the schedule settings (Daily, 23:00 UTC). Adjust if the production environment has a different requirement.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">7</div>
+              <div>Enable the schedule and save.</div>
+            </li>
+          </ol>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>"ADO | Employee Data | Prod | Nightly" exists in Workflow, scheduled and enabled</li>
+            <li>Its ADO Action step references the production link (not the Dev link)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mini-lab">
+        <div class="mini-lab-header">
+          <div class="mini-lab-number">6</div>
+          <div class="mini-lab-title">Verify the Production Map</div>
+          <div class="mini-lab-duration">⏱ 10 min</div>
+        </div>
+        <div class="mini-lab-body">
+          <div class="mini-lab-objective">
+            <strong>Objective</strong>
+            Run the production ADO link manually to confirm the full production pipeline works, then draw the expected ADO topology to verify your understanding.
+          </div>
+          <ol class="mini-lab-steps">
+            <li>
+              <div class="mini-lab-step-num">1</div>
+              <div>In Workflow, open <strong>ADO | Employee Data | Prod | Nightly</strong>. Click <strong>Run Now</strong>.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">2</div>
+              <div>Watch the Run History. Wait for "Completed" status.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">3</div>
+              <div>Navigate to <strong>HR Model (Prod)</strong>. Open a module that should contain employee data. Verify data is present.</div>
+            </li>
+            <li>
+              <div class="mini-lab-step-num">4</div>
+              <div>On paper or in a drawing tool, draw the expected ADO topology. Your drawing should match the sample answer below.</div>
+            </li>
+          </ol>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">HR Model (Prod) — employee data module showing loaded data after the production pipeline run.</div>
+          </div>
+        </div>
+        <div class="mini-lab-completion">
+          <div class="mini-lab-completion-label">✅ Done when:</div>
+          <ul>
+            <li>Production pipeline runs complete successfully</li>
+            <li>Data is visible in HR Model (Prod)</li>
+            <li>Your topology drawing matches the sample answer below</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Sample Answer: Expected ADO Topology After Promotion</h2>
+
+      <div class="callout-important">
+        <span class="callout-label">Complete Production Topology — Meridian Corp HR Payroll</span>
+        <p>
+          <strong>Development Pipeline:</strong><br>
+          Employee Data (Dev CSV) → Employee Transformation — Dev → Dev Link → HR Model (Dev)<br>
+          Automated by: <em>ADO | Employee Data | Dev | Nightly (23:00 UTC)</em><br><br>
+          <strong>Production Pipeline:</strong><br>
+          Employee Data (Prod CSV) → Employee Transformation — Production → Prod Link → HR Model (Prod)<br>
+          Automated by: <em>ADO | Employee Data | Prod | Nightly (23:00 UTC)</em><br><br>
+          <strong>Result:</strong> Two independent pipelines. Dev continues running for ongoing development work. Prod runs production data to the live model. No cross-contamination.
+        </p>
+      </div>
+
+      <div class="callout-tip">
+        <span class="callout-label">Congratulations</span>
+        <p>You've completed the full ADO delivery cycle — from development build (Academy course) through automation (Lab A) and into production (Lab B). This is the pattern you'll replicate on every customer ADO implementation.</p>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./05-productionizing-overview.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← Productionizing ADO</a>
+        <a href="./07-troubleshooting.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">Troubleshooting &amp; Common Errors →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

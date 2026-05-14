@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automating ADO Jobs — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Automating ADO Jobs</h1>
+      <div class="subtitle">Using Anaplan Workflow to schedule and automate ADO runs</div>
+      <div class="badge-row">
+        <span class="content-badge">Automation (Workflow)</span>
+        <span class="content-badge">⏱ 30 min read</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <h2>Why Automate?</h2>
+      <p>When you build ADO in the Academy course, you run it manually — you click "Run" to trigger the pipeline. In production, that's not viable. Customers need data refreshed on a schedule: HR data nightly, financial data weekly, inventory data twice daily. <strong>Workflow</strong> is how you get there.</p>
+
+      <p>Workflow is Anaplan's built-in process automation tool. It allows you to create reusable templates that execute one or more ADO actions (links) on a defined schedule — no manual triggering required, no external scheduler needed.</p>
+
+      <div class="callout-tip">
+        <span class="callout-label">Pricing Note</span>
+        <p>Workflow is included in Anaplan's V5 pricing for both <strong>Advanced</strong> and <strong>Standard</strong> tiers. Essentially all customers can use Workflow — you do not need a separate purchase or add-on.</p>
+      </div>
+
+      <h2>How Workflow Works with ADO</h2>
+      <p>At its simplest, a Workflow template for ADO contains one step: run an ADO link. That link triggers the ADO pipeline — source → transform → load. The template then runs on a schedule you define.</p>
+
+      <div class="tsd-banner">
+        <div class="tsd-step tsd-step-tell">
+          <span class="tsd-step-label">Tell</span>
+          <span class="tsd-step-heading">Workflow Template</span>
+          <span class="tsd-step-desc">A container that holds one or more Workflow steps. For ADO, each step maps to an ADO link (the run action).</span>
+        </div>
+        <div class="tsd-step tsd-step-show">
+          <span class="tsd-step-label">Show</span>
+          <span class="tsd-step-heading">ADO Link as Step</span>
+          <span class="tsd-step-desc">The Workflow step references the ADO link. When the step runs, it triggers the full ADO pipeline behind that link.</span>
+        </div>
+        <div class="tsd-step tsd-step-do">
+          <span class="tsd-step-label">Do</span>
+          <span class="tsd-step-heading">Schedule It</span>
+          <span class="tsd-step-desc">Set a recurring schedule (daily, weekly, custom cron) on the template. Anaplan runs it automatically.</span>
+        </div>
+      </div>
+
+      <h2>4 Steps to Create a Workflow Template for ADO</h2>
+
+      <div class="step">
+        <div class="step-badge">1</div>
+        <div class="step-content">
+          <h3>Navigate to Workflow</h3>
+          <p>In the Anaplan platform, go to the workspace and open <strong>Workflow</strong> from the left navigation. You will see a list of existing workflow templates (empty if this is a new workspace).</p>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Workflow landing page — left nav → Workflow. Shows the templates list with "New Template" button in the top right.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">2</div>
+        <div class="step-content">
+          <h3>Create a New Template</h3>
+          <p>Click <strong>New Template</strong>. Give the template a clear, descriptive name. Use a naming convention that identifies the dataset and environment, for example:</p>
+          <ul>
+            <li><code>ADO | Employee Data | Dev | Nightly</code></li>
+            <li><code>ADO | Product Master | Dev | Weekly</code></li>
+            <li><code>ADO | HR Payroll | Prod | Nightly</code></li>
+          </ul>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">New Template dialog — name field highlighted, showing the naming convention example.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">3</div>
+        <div class="step-content">
+          <h3>Add the ADO Link as a Step</h3>
+          <p>Inside the template, click <strong>Add Step</strong> and select <strong>ADO Action</strong> (or "Run ADO Link" depending on your platform version). From the dropdown, select the ADO link you want to automate. This is the link you built in the Academy course that pushes data into your Anaplan model.</p>
+          <div class="callout-note">
+            <span class="callout-label">Note</span>
+            <p>Only links (not transformation views or source data) can be added as Workflow steps. The link encapsulates the full pipeline — when Workflow runs the link, ADO automatically runs the transformation chain and loads the result.</p>
+          </div>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Add Step dialog — ADO Action type selected, link dropdown showing available ADO links in the workspace.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">4</div>
+        <div class="step-content">
+          <h3>Set the Schedule</h3>
+          <p>Once the step is configured, go to the <strong>Schedule</strong> tab of the template. Configure:</p>
+          <ul>
+            <li><strong>Frequency:</strong> Daily, Weekly, Monthly, or Custom (cron expression)</li>
+            <li><strong>Time:</strong> The time the run should trigger (UTC-based — remember to account for your customer's local timezone)</li>
+            <li><strong>Start date:</strong> When the schedule becomes active</li>
+            <li><strong>Enabled:</strong> Toggle on to activate the schedule</li>
+          </ul>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Schedule configuration panel — frequency set to "Daily", time set to "23:00 UTC", enabled toggle active.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Best Practice: Separate Templates Per Dataset Type</h2>
+
+      <div class="callout-important">
+        <span class="callout-label">Best Practice</span>
+        <p>Create <strong>one Workflow template per dataset type</strong>, not one template that runs everything. Employee data and product data have different schedules, different failure modes, and different business owners. If they share a template and one fails, both are blocked.</p>
+      </div>
+
+      <p>Here's why separate templates matter in practice:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Single Template (bad)</th>
+              <th>Separate Templates (good)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Employee data fails due to HRIS export issue</td>
+              <td>Product data also blocked or skipped</td>
+              <td>Product data runs independently, unaffected</td>
+            </tr>
+            <tr>
+              <td>HR team needs to change payroll run time</td>
+              <td>Must coordinate with FPA team who shares the template</td>
+              <td>HR template schedule updated independently</td>
+            </tr>
+            <tr>
+              <td>Troubleshooting which dataset caused a load failure</td>
+              <td>Must inspect combined run log</td>
+              <td>Each template has its own run history and logs</td>
+            </tr>
+            <tr>
+              <td>Different datasets promoted to production at different times</td>
+              <td>Template must be duplicated and partially updated</td>
+              <td>Each template is promoted independently on its own timeline</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Meridian Corp Example</h2>
+      <p>For the Meridian Corp implementation, two workflow templates are needed from day one:</p>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Template 1: Employee Payroll</h3>
+          <ul>
+            <li><strong>Name:</strong> ADO | Employee Data | Dev | Nightly</li>
+            <li><strong>Step:</strong> HR Payroll ADO Link (Dev)</li>
+            <li><strong>Schedule:</strong> Daily at 23:00 UTC</li>
+            <li><strong>Rationale:</strong> Payroll data must be current before the morning planning session (Pacific time)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Template 2: Product Inventory</h3>
+          <ul>
+            <li><strong>Name:</strong> ADO | Product Master | Dev | Weekly</li>
+            <li><strong>Step:</strong> Product Master ADO Link (Dev)</li>
+            <li><strong>Schedule:</strong> Weekly on Sunday at 06:00 UTC</li>
+            <li><strong>Rationale:</strong> Product master changes slowly; weekly refresh before Monday planning is sufficient</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-tip">
+        <span class="callout-label">Timezone Tip</span>
+        <p>Anaplan Workflow schedules run in UTC. Always confirm the customer's local timezone and convert accordingly. A customer in Japan (JST = UTC+9) wanting an 8 AM local run should schedule their Workflow at 23:00 UTC the previous day.</p>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./02-ado-concepts.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← ADO Concepts</a>
+        <a href="./04-lab-automation.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">Lab A: Automate Your ADO Job →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

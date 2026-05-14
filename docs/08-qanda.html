@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q&amp;A from Sessions — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Q&amp;A from Sessions</h1>
+      <div class="subtitle">Real questions from ADO partner sessions, with full answers</div>
+      <div class="badge-row">
+        <span class="content-badge">Reference</span>
+        <span class="content-badge">Session: March 2026</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <p>These Q&amp;A pairs come from actual partner sessions and implementation discussions. They cover common questions about Workflow, ALM, prerequisites, and production patterns.</p>
+
+      <h2>Workflow &amp; Scheduling</h2>
+
+      <div class="qa-item">
+        <div class="question">Q: Is Workflow something that customers have to buy separately, or is it included in Anaplan?</div>
+        <div class="answer">
+          <strong>A:</strong> In V5 pricing (which covers both the Advanced and Standard tiers), Workflow is included. Essentially all customers on V5 pricing can use Workflow — there is no separate purchase or add-on required. If a customer is on an older pricing structure, check with the Account Executive to confirm. For most partners working on active apps opportunities, Workflow availability is not a concern.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: Can I put multiple ADO jobs in a single Workflow template, or should I keep them separate?</div>
+        <div class="answer">
+          <strong>A:</strong> Technically you can add multiple ADO Action steps to a single Workflow template, but it's a best practice to keep them separate — one template per dataset type. The reason: if you combine employee data and product data in one template, a failure in one dataset blocks or delays the other. Separate templates give each dataset its own run history, its own failure scope, and its own schedule. They're also easier to debug and promote independently to production.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: Workflow schedules are in UTC — how do I handle a customer that wants their data refreshed at 8 AM local time in Tokyo?</div>
+        <div class="answer">
+          <strong>A:</strong> Japan Standard Time (JST) is UTC+9, with no daylight saving time. So 8 AM JST = 23:00 UTC the previous day. Set the Workflow schedule to 23:00 UTC daily, and the data will be ready in the Anaplan model by 8 AM the following morning in Tokyo. Always document the UTC schedule and its local-time equivalent in your project notes — it's a common source of confusion when handover documentation is unclear.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: Is there a minimum interval for Workflow schedules — can I schedule ADO to run every 5 minutes?</div>
+        <div class="answer">
+          <strong>A:</strong> The minimum practical interval for Workflow-triggered ADO runs depends on the ADO pipeline duration. ADO runs block the Anaplan model during the load phase — running every 5 minutes would keep the model essentially permanently locked. Additionally, the Workflow scheduler has minimum interval constraints (typically 15 minutes). For near-real-time data needs (&lt;15 minute intervals), consider a direct Anaplan API integration rather than Workflow-scheduled ADO. ADO is designed for batch-oriented scheduled loads.
+        </div>
+      </div>
+
+      <h2>ALM &amp; Productionization</h2>
+
+      <div class="qa-item">
+        <div class="question">Q: Is there an ALM function in ADO — can I promote my ADO pipeline the same way I promote a model?</div>
+        <div class="answer">
+          <strong>A:</strong> Yes and no. ADO has one ALM-like feature: the "Clone to LLM models" option on links, which creates a production-targeted link from a development link in one click. However, that's the extent of it. Transformation views and source data do not have an equivalent promote feature — they must be manually duplicated within ADO and their sources updated. This means productionizing ADO requires more manual steps than promoting a model. Build this into your project plan: allow 2–4 hours per ADO pipeline for productionization, depending on complexity.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: After using "Clone to LLM models" to create a production link, does ADO automatically update the source to the production transformation view?</div>
+        <div class="answer">
+          <strong>A:</strong> No — and this is the most common mistake in ADO productionization. "Clone to LLM models" updates the <em>target model</em> of the link (pointing it at the production model), but it does NOT update the link's source. After cloning, the production link still points at the development transformation view, which reads from development source data. You must manually open the production link after cloning and update its source to the production transformation view. Forgetting this step means production loads are silently pulling dev data.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: Can I skip the Academy course and jump straight to this workshop if I have general Anaplan experience?</div>
+        <div class="answer">
+          <strong>A:</strong> You can follow the steps in this workshop without completing the Academy course, but you'll be missing important context — specifically, the HR model and FPA model that Labs A and B are designed around. The Academy ADO course provides both the conceptual foundation (what ADO components are and how they connect) and the hands-on models you'll use in these exercises. Without those, you'll either need to build your own equivalent models first or adapt the labs significantly. We strongly recommend completing the Academy ADO course before starting this workshop.
+        </div>
+      </div>
+
+      <h2>Source Data &amp; Transformation</h2>
+
+      <div class="qa-item">
+        <div class="question">Q: Should we use a connection or a CSV file for the ADO source data in production? What's the recommendation?</div>
+        <div class="answer">
+          <strong>A:</strong> For production implementations, live connectors are generally preferred because they eliminate the manual step of uploading a file — data flows directly from the source system on schedule. However, many Academy exercises and smaller implementations use CSV because it's simpler to configure. The choice depends on the customer's technical setup: if they have a supported connector for their source system (Salesforce, SAP, Snowflake, Workday, etc.) and their IT team can configure the connection, use a connector. If the source system doesn't have a native ADO connector, or if the data volume and complexity are low, CSV-based imports via CloudWorks or API are perfectly valid for production.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: Can ADO read data from another Anaplan model — like pulling actuals from a data hub model into a planning model?</div>
+        <div class="answer">
+          <strong>A:</strong> Technically yes, but it's generally not recommended for model-to-model transfers within Anaplan. ADO is optimized for bringing external data into Anaplan. For moving data between Anaplan models (like actuals from a data hub into a planning spoke), the native Anaplan import action (model-to-model import) is the right tool — it's faster, simpler, and doesn't consume ADO storage or pipeline capacity. Use ADO for what it's designed for: external data ingestion with transformation. If you do use ADO to source from an Anaplan model, follow Planual rule 8.01-01: create a dedicated flat module in the source model with only the data ADO needs — never source from a module with subsidiary views.
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="question">Q: In a customer project, how many ADO pipelines should I expect to need? Is it one pipeline for everything?</div>
+        <div class="answer">
+          <strong>A:</strong> Plan for one pipeline (link + transformation view chain) per distinct dataset type. A typical mid-market implementation might have 3–5 pipelines: employee master, headcount actuals, product master, financial actuals, and a budget upload. Each dataset has its own source structure, transformation logic, and load schedule — they should not be combined. If two datasets have the same source structure and schedule, it may be worth combining them in one transformation view with a join, but in practice, separate pipelines per dataset are easier to maintain, debug, and promote to production independently.
+        </div>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./07-troubleshooting.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← Troubleshooting &amp; Common Errors</a>
+        <a href="../index.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">↩ Back to Home</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>

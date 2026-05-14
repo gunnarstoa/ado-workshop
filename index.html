@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./docs/01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./docs/02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./docs/03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./docs/04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./docs/05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./docs/06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./docs/07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./docs/08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="index-hero">
+      <h1>ADO Delivery Partner Workshop</h1>
+      <p>Anaplan Data Orchestration · Automation with Workflow · Dev → UAT → Prod</p>
+    </div>
+    <div class="content-body">
+
+      <h2>Welcome</h2>
+      <p>This is the practitioner lab guide for the ADO Delivery Partner Workshop. It covers the two critical topics that come <em>after</em> the Anaplan ADO Academy course: how to automate ADO jobs using Workflow, and how to promote your ADO setup from Development through UAT to Production.</p>
+      <p>Use the sidebar to navigate between pages. All lab exercises reference the <strong>Meridian Corp</strong> fictional company profile. Prerequisites: you must have completed the Anaplan ADO Academy course and have the HR model and FPA model from that course available in your workspace.</p>
+
+      <h2>Workshop Modules</h2>
+
+      <h3 style="margin-top:1.5rem;margin-bottom:0.5rem;color:#1e3a5f;">🚀 Getting Started</h3>
+      <div class="index-nav-grid">
+        <a class="index-nav-card" href="./docs/01-overview.html">
+          <div class="inc-num">Start Here</div>
+          <div class="inc-title">Workshop Overview</div>
+          <div class="inc-desc">Objectives, prerequisites, workshop structure, and the Meridian Corp case study</div>
+        </a>
+        <a class="index-nav-card" href="./docs/02-ado-concepts.html">
+          <div class="inc-num">Getting Started · 2</div>
+          <div class="inc-title">ADO Concepts</div>
+          <div class="inc-desc">Pipelines, links, transformation views, source data, and the Dev → UAT → Prod topology</div>
+        </a>
+      </div>
+
+      <h3 style="margin-top:1.5rem;margin-bottom:0.5rem;color:#0066cc;">⚙️ Automation (Workflow)</h3>
+      <div class="index-nav-grid">
+        <a class="index-nav-card" href="./docs/03-automation-scheduling.html">
+          <div class="inc-num">Automation · 1</div>
+          <div class="inc-title">Automating ADO Jobs</div>
+          <div class="inc-desc">Using Workflow to schedule ADO runs — 4 steps, best practices, and separate templates per dataset</div>
+        </a>
+        <a class="index-nav-card" href="./docs/04-lab-automation.html">
+          <div class="inc-num">Lab A · 60 min</div>
+          <div class="inc-title">Lab A: Automate Your ADO Job</div>
+          <div class="inc-desc">Create workflow templates for employee and product data, configure schedules, verify triggers</div>
+        </a>
+      </div>
+
+      <h3 style="margin-top:1.5rem;margin-bottom:0.5rem;color:#7c3aed;">🏭 Productionization</h3>
+      <div class="index-nav-grid">
+        <a class="index-nav-card" href="./docs/05-productionizing-overview.html">
+          <div class="inc-num">Production · 1</div>
+          <div class="inc-title">Productionizing ADO</div>
+          <div class="inc-desc">The 6-step production promotion flow, ALM deep dive, and Clone to LLM models</div>
+        </a>
+        <a class="index-nav-card" href="./docs/06-lab-production.html">
+          <div class="inc-num">Lab B · 60 min</div>
+          <div class="inc-title">Lab B: Promote Dev to Production</div>
+          <div class="inc-desc">Full guided lab walking all 6 steps — Meridian Corp HR payroll job to production</div>
+        </a>
+      </div>
+
+      <h3 style="margin-top:1.5rem;margin-bottom:0.5rem;color:#374151;">📚 Reference</h3>
+      <div class="index-nav-grid">
+        <a class="index-nav-card" href="./docs/07-troubleshooting.html">
+          <div class="inc-num">Reference · 1</div>
+          <div class="inc-title">Troubleshooting &amp; Common Errors</div>
+          <div class="inc-desc">Workflow misfires, stale source data, connection failures, schedule issues, and more</div>
+        </a>
+        <a class="index-nav-card" href="./docs/08-qanda.html">
+          <div class="inc-num">Reference · 2</div>
+          <div class="inc-title">Q&amp;A from Sessions</div>
+          <div class="inc-desc">Real questions from the ADO partner sessions with full answers</div>
+        </a>
+      </div>
+
+    </div>
+  </main>
+  <script src="./js/nav.js"></script>
+</body>
+</html>

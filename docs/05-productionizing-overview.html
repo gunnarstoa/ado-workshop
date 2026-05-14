@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productionizing ADO — ADO Delivery Partner Workshop</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="mobile-header">
+    <button id="hamburger">☰</button>
+    <span>ADO Delivery Partner Workshop</span>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">ADO Delivery Partner Workshop</div>
+      <div class="sidebar-subtitle">Automation &amp; Productionization</div>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-section-title">Getting Started</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./01-overview.html">Workshop Overview</a></li>
+        <li><a class="nav-link" href="./02-ado-concepts.html">ADO Concepts</a></li>
+      </ul>
+      <li class="nav-section-title">Automation (Workflow)</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./03-automation-scheduling.html">Automating ADO Jobs</a></li>
+        <li><a class="nav-link" href="./04-lab-automation.html">Lab A: Automate Your ADO Job</a></li>
+      </ul>
+      <li class="nav-section-title">Productionization</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./05-productionizing-overview.html">Productionizing ADO</a></li>
+        <li><a class="nav-link" href="./06-lab-production.html">Lab B: Promote Dev to Production</a></li>
+      </ul>
+      <li class="nav-section-title">Reference</li>
+      <ul class="nav-submenu">
+        <li><a class="nav-link" href="./07-troubleshooting.html">Troubleshooting &amp; Common Errors</a></li>
+        <li><a class="nav-link" href="./08-qanda.html">Q&amp;A from Sessions</a></li>
+      </ul>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Productionizing ADO</h1>
+      <div class="subtitle">The 6-step flow to promote Dev ADO to a production environment</div>
+      <div class="badge-row">
+        <span class="content-badge">Productionization</span>
+        <span class="content-badge">⏱ 30 min read</span>
+      </div>
+    </div>
+    <div class="content-body">
+
+      <h2>Why Productionizing ADO Is Different</h2>
+      <p>When a developer promotes an Anaplan model from Dev to Production using Anaplan's Application Lifecycle Management (ALM), the model structure and formulas travel across environments cleanly. ADO is different — <strong>ADO does not have a full ALM promotion path</strong>. You cannot simply "promote" an ADO pipeline the way you promote a model revision.</p>
+
+      <p>Instead, you rebuild each ADO component for the target environment, using the development pipeline as your blueprint. The one exception is <strong>links</strong>, which have a built-in clone feature. Everything else — source data and transformation views — must be duplicated manually.</p>
+
+      <h2>The 6-Step Production Promotion Flow</h2>
+
+      <div class="callout-important">
+        <span class="callout-label">Starting Point</span>
+        <p>These steps assume you have: (1) a working Dev ADO pipeline with at least one link pushing data into a development Anaplan model, and (2) a need to create an equivalent pipeline that loads production data into a production Anaplan model. The development model and its ADO pipeline are your blueprint.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">1</div>
+        <div class="step-content">
+          <h3>Prepare the Production Model</h3>
+          <p>Before any ADO work, you need a production Anaplan model. Use Anaplan's standard model promotion process (ALM or manual export/import) to create the production model from the development model. The production model will have the same structure as Dev but with no data in it — data will flow in through the production ADO pipeline.</p>
+          <div class="callout-note">
+            <span class="callout-label">Note</span>
+            <p>If you're using Anaplan's standard ALM (Application Lifecycle Management), you should already have a model in your Linked Library (LLM) that you can sync to production. This step ensures the production model exists and is synced before you configure ADO against it.</p>
+          </div>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Anaplan model list showing Dev model and Prod model side by side in the workspace.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">2</div>
+        <div class="step-content">
+          <h3>Create Production Source Data</h3>
+          <p>Your development pipeline points at development source data (a dev CSV file or a connection to a dev/sandbox system). For production, you need production source data. How you do this depends on your connection type:</p>
+
+          <div class="two-col">
+            <div class="card">
+              <h3>If using CSV</h3>
+              <p>In ADO, upload a production CSV file (one that contains production-representative data) and create a new source dataset pointing to it. Name it clearly: e.g., <code>Employee Data — Production</code>.</p>
+            </div>
+            <div class="card">
+              <h3>If using a Connector</h3>
+              <p>Create a new connector configuration in ADO that points to the production system. Use production credentials, not dev/sandbox credentials. Name the connection clearly: e.g., <code>HRIS — Production</code>.</p>
+            </div>
+          </div>
+
+          <div class="callout-warning">
+            <span class="callout-label">Warning</span>
+            <p>Never reuse a development connection or CSV for production. Dev data often contains test records, masked values, or sample rows that are not appropriate for a production pipeline. Always use production-sourced data in the production ADO pipeline.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">3</div>
+        <div class="step-content">
+          <h3>Duplicate the Transformation View</h3>
+          <p>In ADO, navigate to your development transformation view. Use the <strong>Duplicate</strong> option to create a copy. Rename the copy with a production label, e.g., <code>Employee Transformation — Production</code>.</p>
+          <p>This gives you a production transformation view that has the same transformation logic as Dev — same column casts, same filters, same joins. You just need to update the source in the next step.</p>
+          <div class="callout-important">
+            <span class="callout-label">Key Constraint</span>
+            <p>There is <strong>no "Clone to LLM models" feature for transformation views</strong>. Unlike links, transformation views cannot be promoted via a single click. You must manually duplicate the view within ADO and update its source reference. This is expected behavior — plan for it in your project timeline.</p>
+          </div>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">ADO transformation view list showing Dev view and the newly duplicated Prod view side by side.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">4</div>
+        <div class="step-content">
+          <h3>Update the Transformation View Source to Production</h3>
+          <p>Open the duplicated production transformation view. Change its <strong>source dataset</strong> from the development source data to the production source data you created in Step 2.</p>
+          <p>Verify that the column mappings still align — if your production CSV has the same column headers as dev (which it should), no remapping is needed. If column names differ, update the mappings at this step.</p>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Transformation view source data dropdown — showing the change from "Employee Data — Dev" to "Employee Data — Production".</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">5</div>
+        <div class="step-content">
+          <h3>Create the Production Link Using Clone to LLM Models</h3>
+          <p>This is the step where ADO's one ALM-like feature comes in. Navigate to your <strong>development link</strong> in ADO. Click the <strong>Clone to LLM models</strong> option (sometimes shown as "Clone Link" or similar depending on the ADO version). A dialog will appear asking you to select the target model.</p>
+          <p>Select the <strong>production model</strong> you prepared in Step 1. ADO will create a new link that targets the production model and automatically creates the corresponding ADO import action in that model.</p>
+
+          <div class="callout-warning">
+            <span class="callout-label">Critical Step After Cloning</span>
+            <p>Even after using Clone to LLM Models, the new production link still points at the <strong>development transformation view</strong> as its source. This is not changed automatically. You must manually update the production link's source to point to the <strong>production transformation view</strong> you created in Steps 3–4.</p>
+          </div>
+
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">"Clone to LLM models" dialog on the development link — target model dropdown showing the production model selected.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-badge">6</div>
+        <div class="step-content">
+          <h3>Duplicate the Workflow Template and Update</h3>
+          <p>Return to Workflow. Find the development template you created in Lab A (e.g., <code>ADO | Employee Data | Dev | Nightly</code>). Duplicate it and rename it to the production equivalent: <code>ADO | Employee Data | Prod | Nightly</code>.</p>
+          <p>Inside the duplicated template, update the <strong>ADO Action step</strong> to reference the <strong>production link</strong> instead of the development link. Finally, set the production schedule (same cadence as Dev, or adjust if the customer wants production loads at a different time).</p>
+          <div class="screenshot-placeholder">
+            <div class="ss-icon">📸</div>
+            <div class="ss-label">[Screenshot Placeholder]</div>
+            <div class="ss-desc">Workflow template edit view — ADO Action step updated to show the production link instead of the dev link.</div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Expected Topology After Promotion</h2>
+      <p>Before promotion, your ADO map looks like this (development only):</p>
+
+      <div class="callout-note">
+        <span class="callout-label">Development-only Topology</span>
+        <p><strong>Dev Source Data</strong> → <strong>Employee TV (Dev)</strong> → <strong>Dev Link</strong> → <strong>HR Model (Dev)</strong><br>Automated by: <em>ADO | Employee Data | Dev | Nightly</em></p>
+      </div>
+
+      <p>After completing all 6 steps, your ADO map should look like this:</p>
+
+      <div class="callout-important">
+        <span class="callout-label">Full Dev + Prod Topology</span>
+        <p>
+          <strong>Dev Source Data</strong> → <strong>Employee TV (Dev)</strong> → <strong>Dev Link</strong> → <strong>HR Model (Dev)</strong><br>
+          Automated by: <em>ADO | Employee Data | Dev | Nightly</em><br><br>
+          <strong>Prod Source Data</strong> → <strong>Employee TV (Prod)</strong> → <strong>Prod Link</strong> → <strong>HR Model (Prod)</strong><br>
+          Automated by: <em>ADO | Employee Data | Prod | Nightly</em>
+        </p>
+      </div>
+
+      <h2>ALM Deep Dive: What CAN vs. CANNOT Be Cloned</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ADO Component</th>
+              <th>Can Clone?</th>
+              <th>How</th>
+              <th>Post-Clone Action Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Links</strong></td>
+              <td>✅ Yes</td>
+              <td>"Clone to LLM models" feature in ADO</td>
+              <td>Must update source (transformation view) to production version</td>
+            </tr>
+            <tr>
+              <td><strong>Transformation Views</strong></td>
+              <td>⚠️ Manually only</td>
+              <td>Use Duplicate within ADO; rename; update source</td>
+              <td>Must update source dataset to production version</td>
+            </tr>
+            <tr>
+              <td><strong>Source Data</strong></td>
+              <td>❌ No</td>
+              <td>Must create new production source dataset (upload CSV or create new connector)</td>
+              <td>None after creation — this IS the production source</td>
+            </tr>
+            <tr>
+              <td><strong>Workflow Templates</strong></td>
+              <td>⚠️ Manually only</td>
+              <td>Use Duplicate in Workflow; rename; update ADO Action step</td>
+              <td>Update step to reference production link; reconfigure schedule</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav class="prevnext-nav" style="display:flex;justify-content:space-between;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--color-border);">
+        <a href="./04-lab-automation.html" style="background:#f1f5f9;color:var(--color-text);padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">← Lab A: Automate Your ADO Job</a>
+        <a href="./06-lab-production.html" style="background:var(--color-primary);color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:0.9rem;">Lab B: Promote Dev to Production →</a>
+      </nav>
+
+    </div>
+  </main>
+  <script src="../js/nav.js"></script>
+</body>
+</html>
